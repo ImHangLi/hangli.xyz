@@ -49,21 +49,21 @@ export default function MenuBar() {
 
   return (
     /* MenuBar */
-    <div className="flex justify-between items-center bg-cyan-50/70 backdrop-blur-[10px] h-8 px-[20px] text-black">
+    <div className="flex justify-between items-center bg-cyan-50/70 backdrop-blur-[10px] h-8 px-[10px] text-black">
       {/* Left Section */}
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-[24px] text-[15px]">
         {/* Apple Menu */}
-        <div className="relative">
+        <div className="relative left-1">
           <button
             onClick={() => setShowAppleMenu(!showAppleMenu)}
-            className="text-xl hover:bg-black/10 rounded px-2"
+            className={`text-xl ${showAppleMenu ? 'bg-black/10 hover:bg-black/10' : 'active:bg-black/10'} rounded px-2 cursor-default`}
           >
             
           </button>
-          
-          <AppleMenu 
-            isOpen={showAppleMenu} 
-            onClose={() => setShowAppleMenu(false)} 
+
+          <AppleMenu
+            isOpen={showAppleMenu}
+            onClose={() => setShowAppleMenu(false)}
           />
         </div>
         <span className="font-bold">Finder</span>
