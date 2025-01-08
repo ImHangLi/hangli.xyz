@@ -2,8 +2,13 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import AppleMenu from "./AppleMenu"
 
 export default function MenuBar() {
+  // State for Apple Menu
+  const [showAppleMenu, setShowAppleMenu] = useState(false)
+
+  // State for current time and date
   const [currentTime, setCurrentTime] = useState<string>("")
   const [currentDate, setCurrentDate] = useState<string>("")
 
@@ -47,7 +52,20 @@ export default function MenuBar() {
     <div className="flex justify-between items-center bg-cyan-50/70 backdrop-blur-[10px] h-8 px-[20px] text-black">
       {/* Left Section */}
       <div className="flex items-center space-x-6">
-        <span className="text-xl"></span>
+        {/* Apple Menu */}
+        <div className="relative">
+          <button
+            onClick={() => setShowAppleMenu(!showAppleMenu)}
+            className="text-xl hover:bg-black/10 rounded px-2"
+          >
+            
+          </button>
+          
+          <AppleMenu 
+            isOpen={showAppleMenu} 
+            onClose={() => setShowAppleMenu(false)} 
+          />
+        </div>
         <span className="font-bold">Finder</span>
         <span>File</span>
         <span>Edit</span>
