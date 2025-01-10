@@ -2,11 +2,41 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import AppleMenu from "./AppleMenu"
+import { AppleMenu, EditMenu, FileMenu, FinderMenu, GoMenu, HelpMenu, ViewMenu, WindowMenu } from "./MenuItems"
+
+interface MenuButtonProps {
+  className?: string
+  content: string
+  MenuItem: React.ComponentType<{ isOpen: boolean; onClose: () => void }>
+  onClick?: () => void
+}
 
 export default function MenuBar() {
   // State for Apple Menu
-  const [showAppleMenu, setShowAppleMenu] = useState(false)
+  const [ShowMenu, setShowMenu] = useState<string | null>(null)
+
+  // Menu Button
+  function MenuButton({ className = "", content, MenuItem }: MenuButtonProps) {
+    const isActive = ShowMenu === content
+
+    return (
+      <div
+        className="relative left-1"
+        onMouseEnter={() => ShowMenu && setShowMenu(content)}
+      >
+        <button
+          onClick={() => setShowMenu(isActive ? null : content)}
+          className={`${className} ${
+            isActive ? "bg-[#b4e2e4] hover:bg-[#b4e2e4]" : "active:bg-[#b4e2e4]"
+          } rounded px-4 -mx-4 h-[25px] cursor-default flex items-center`}
+        >
+          {content}
+        </button>
+
+        <MenuItem isOpen={isActive} onClose={() => setShowMenu(null)} />
+      </div>
+    )
+  }
 
   // State for current time and date
   const [currentTime, setCurrentTime] = useState<string>("")
@@ -49,30 +79,22 @@ export default function MenuBar() {
 
   return (
     /* MenuBar */
-    <div className="flex justify-between items-center bg-cyan-50/70 backdrop-blur-[10px] h-8 px-[10px] text-black">
+    <div className="flex justify-between items-center bg-[#d0fcfc] backdrop-blur-[10px] h-9 px-[10px] text-black text-[14.5px]">
       {/* Left Section */}
-      <div className="flex items-center space-x-[24px] text-[15px]">
+      <div className="flex items-center mx-2 space-x-[24px]">
         {/* Apple Menu */}
-        <div className="relative left-1">
-          <button
-            onClick={() => setShowAppleMenu(!showAppleMenu)}
-            className={`text-xl ${showAppleMenu ? 'bg-black/10 hover:bg-black/10' : 'active:bg-black/10'} rounded px-2 cursor-default`}
-          >
-            
-          </button>
-
-          <AppleMenu
-            isOpen={showAppleMenu}
-            onClose={() => setShowAppleMenu(false)}
-          />
-        </div>
-        <span className="font-bold">Finder</span>
-        <span>File</span>
-        <span>Edit</span>
-        <span>View</span>
-        <span>Go</span>
-        <span>Window</span>
-        <span>Help</span>
+        <MenuButton className="text-xl" content="" MenuItem={AppleMenu} />
+        <MenuButton
+          className="font-bold"
+          content="Finder"
+          MenuItem={FinderMenu}
+        />
+        <MenuButton content="File" MenuItem={FileMenu} />
+        <MenuButton content="Edit" MenuItem={EditMenu} />
+        <MenuButton content="View" MenuItem={ViewMenu} />
+        <MenuButton content="Go" MenuItem={GoMenu} />
+        <MenuButton content="Window" MenuItem={WindowMenu} />
+        <MenuButton content="Help" MenuItem={HelpMenu} />
       </div>
 
       {/* Right Section */}

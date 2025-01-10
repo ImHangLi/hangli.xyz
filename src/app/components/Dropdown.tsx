@@ -1,6 +1,11 @@
 import React, { useEffect } from "react"
 import { ReactNode } from "react"
 
+export interface MenuProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
 interface DropdownProps {
   isOpen: boolean
   onClose?: () => void
@@ -31,7 +36,7 @@ export default function Dropdown({
 
   return (
     <div
-      className={`absolute top-8 -left-2 w-[220px] bg-[#cff2f1] backdrop-blur-sm backdrop-invert backdrop-opacity-10 rounded-lg border-zinc-300 border-[0.5px] shadow-lg py-2 z-50 ${className}`}
+      className={`absolute top-8 -left-4 w-[220px] bg-[#cff2f1] backdrop-blur-sm backdrop-invert backdrop-opacity-10 rounded-lg border-zinc-300 border-[0.5px] shadow-lg py-2 z-50 ${className}`}
     >
       {children}
     </div>
@@ -42,13 +47,15 @@ export default function Dropdown({
 export function DropdownItem({
   children,
   onClick,
+  className = "",
 }: {
   children: ReactNode
   onClick?: () => void
+  className?: string
 }) {
   return (
     <div
-      className="px-2 py-1 hover:bg-blue-400 rounded-md mx-[6px] cursor-default text-sm hover:text-white"
+      className={`px-2 py-1 hover:bg-[#589cfc] rounded-md mx-[6px] cursor-default hover:text-white ${className}`}
       onClick={onClick}
     >
       {children}
